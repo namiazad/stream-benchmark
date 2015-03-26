@@ -1,6 +1,6 @@
-package com.nami.fpinscala
+package com.nami.benchmark
 
-import org.openjdk.jmh.annotations.{Mode, BenchmarkMode, Benchmark}
+import org.openjdk.jmh.annotations.{Benchmark, BenchmarkMode, Mode}
 
 object StreamingBenchmark {
   val source = 1 to 50000000
