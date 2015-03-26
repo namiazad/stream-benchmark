@@ -1,4 +1,4 @@
-name := "functional-programming-in-scala"
+name := "stream-benchmark"
 
 version := "1.0"
 
@@ -8,4 +8,4 @@ libraryDependencies += "org.openjdk.jmh" % "jmh-core" % "1.5.2"
 
 jmhSettings
 
-mainClass in Compile := Some("com.nami.fpinscala.MemoryUsage")
+mainClass in Compile := Some("com.nami.benchmark.MemoryUsage")
