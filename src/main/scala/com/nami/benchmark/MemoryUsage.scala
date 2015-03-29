@@ -3,32 +3,36 @@ package com.nami.benchmark
 object MemoryUsage extends App {
   import StreamingBenchmark._
 
+  val Delay = 5000
+
   (1 to 20).foreach { x => Thread.sleep(1000); println (s"$x seconds")}
 
-  def measure(): Unit = {
-    new StreamingBenchmark().forLoop(strictData)
-    println("ForLoop Done!")
-
+  def gcWithDelay(): Unit = {
     System.gc()
-    Thread.sleep(5000)
+    Thread.sleep(Delay)
+  }
 
+  def measure(): Unit = {
     new StreamingBenchmark().streaming(lazyData)
     println("Streaming Done!")
 
-    System.gc()
-    Thread.sleep(5000)
+    gcWithDelay()
 
-    new StreamingBenchmark().collection(strictData)
+    new StreamingBenchmark().forLoop(arrayData)
+    println("ForLoop Done!")
+
+    gcWithDelay()
+
+    new StreamingBenchmark().collection(arrayData)
     println("Collection Done!")
 
-    System.gc()
-    Thread.sleep(5000)
+    gcWithDelay()
+
   }
 
-  measure()
+  (1 to 3).foreach { _ =>
+    measure()
 
-  System.gc()
-
-  Thread.sleep(50000)
-
+    Thread.sleep(Delay)
+  }
 }
