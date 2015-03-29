@@ -42,5 +42,5 @@ class StreamingBenchmark {
 
   def streaming(xs: => Stream[Int]): Long = process(xs)
 
-  def collection(xs: Seq[Int]): Long = process(xs)
+  def collection(xs: Array[Int]): Long = process(xs)
 }
