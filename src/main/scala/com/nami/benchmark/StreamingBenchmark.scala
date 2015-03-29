@@ -5,9 +5,7 @@ import org.openjdk.jmh.annotations.{Benchmark, BenchmarkMode, Mode}
 object StreamingBenchmark {
   val source = 1 to 50000000
   def lazyData = source.toStream
-  def strictData = source.toVector
-
-  println(strictData.getClass.getName)
+  def arrayData = source.toArray
 }
 
 class StreamingBenchmark {
@@ -16,7 +14,7 @@ class StreamingBenchmark {
 
   @Benchmark
   @BenchmarkMode(Array(Mode.Throughput))
-  def forLoop(): Long = forLoop(strictData)
+  def forLoop(): Long = forLoop(arrayData)
 
   @Benchmark
   @BenchmarkMode(Array(Mode.Throughput))
@@ -24,9 +22,9 @@ class StreamingBenchmark {
 
   @Benchmark
   @BenchmarkMode(Array(Mode.Throughput))
-  def strictProcessing(): Long = collection(strictData)
+  def strictProcessing(): Long = collection(arrayData)
 
-  def forLoop(xs: Vector[Int]): Long = {
+  def forLoop(xs: Array[Int]): Long = {
     val length = xs.length
     var i = 0
 
@@ -45,6 +43,4 @@ class StreamingBenchmark {
   def streaming(xs: => Stream[Int]): Long = process(xs)
 
   def collection(xs: Seq[Int]): Long = process(xs)
-
-  def forLoop(xs: Seq[Int]): Long = process(xs)
 }
